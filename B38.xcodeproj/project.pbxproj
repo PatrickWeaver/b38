@@ -10,8 +10,10 @@
 		CD1D4BF0210D036C000B813A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1D4BEF210D036C000B813A /* AppDelegate.swift */; };
 		CD1D4BF2210D036C000B813A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1D4BF1210D036C000B813A /* ViewController.swift */; };
 		CD1D4BF5210D036C000B813A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD1D4BF3210D036C000B813A /* Main.storyboard */; };
-		CD1D4BF7210D036D000B813A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1D4BF6210D036D000B813A /* Assets.xcassets */; };
 		CD1D4BFA210D036D000B813A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD1D4BF8210D036D000B813A /* LaunchScreen.storyboard */; };
+		CD1D4C02210D2357000B813A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1D4C01210D2357000B813A /* Assets.xcassets */; };
+		CD1D4C04210D261A000B813A /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1D4C03210D261A000B813A /* Bus.swift */; };
+		CD1D4C08210EA800000B813A /* NextBussesTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1D4C07210EA800000B813A /* NextBussesTable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,9 +21,11 @@
 		CD1D4BEF210D036C000B813A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD1D4BF1210D036C000B813A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CD1D4BF4210D036C000B813A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		CD1D4BF6210D036D000B813A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD1D4BF9210D036D000B813A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CD1D4BFB210D036D000B813A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD1D4C01210D2357000B813A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CD1D4C03210D261A000B813A /* Bus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
+		CD1D4C07210EA800000B813A /* NextBussesTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBussesTable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,9 +60,11 @@
 			children = (
 				CD1D4BEF210D036C000B813A /* AppDelegate.swift */,
 				CD1D4BF1210D036C000B813A /* ViewController.swift */,
+				CD1D4C07210EA800000B813A /* NextBussesTable.swift */,
+				CD1D4C03210D261A000B813A /* Bus.swift */,
 				CD1D4BF3210D036C000B813A /* Main.storyboard */,
-				CD1D4BF6210D036D000B813A /* Assets.xcassets */,
 				CD1D4BF8210D036D000B813A /* LaunchScreen.storyboard */,
+				CD1D4C01210D2357000B813A /* Assets.xcassets */,
 				CD1D4BFB210D036D000B813A /* Info.plist */,
 			);
 			path = B38;
@@ -123,7 +129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD1D4BFA210D036D000B813A /* LaunchScreen.storyboard in Resources */,
-				CD1D4BF7210D036D000B813A /* Assets.xcassets in Resources */,
+				CD1D4C02210D2357000B813A /* Assets.xcassets in Resources */,
 				CD1D4BF5210D036C000B813A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,6 +141,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD1D4C08210EA800000B813A /* NextBussesTable.swift in Sources */,
+				CD1D4C04210D261A000B813A /* Bus.swift in Sources */,
 				CD1D4BF2210D036C000B813A /* ViewController.swift in Sources */,
 				CD1D4BF0210D036C000B813A /* AppDelegate.swift in Sources */,
 			);
