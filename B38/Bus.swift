@@ -20,11 +20,21 @@ func dateFromDatetimeString(dt: String?) -> Date? {
     return dateFormatter.date(from: dtS)
 }
 
-func stringIntervalFromDateTime(dt: Date?) -> String {
+func intervalFromDateTime(dt: Date?) -> Int? {
     guard let interval = dt?.timeIntervalSinceNow else {
-        return "Error"
+        return nil
     }
-    let intInterval = -Int(interval)
+    return Int(interval)
+}
+
+func countdownFromTimeInSeconds(timeUntilArrival: Int?) -> String {
+    guard let timeUntilArrival = timeUntilArrival else {
+        return ""
+    }
+    let intInterval = Int(timeUntilArrival)
+    if intInterval < 1 {
+        return "Arriving or late"
+    }
     let hours = intInterval / 3600
     var hoursString = "\(hours):"
     if hours == 0 {
@@ -33,8 +43,8 @@ func stringIntervalFromDateTime(dt: Date?) -> String {
     
     let minutes = (intInterval % 3600) / 60
     var minutesString = "\(minutes):"
-    if minutes < 10 {
-        minutesString = "0\(minutesString):"
+    if minutes < 10, hours > 0 {
+        minutesString = "0\(minutesString)"
     }
     
     let seconds = (intInterval % 3600) % 60
@@ -149,8 +159,8 @@ struct VehicleLocation: Decodable {
 
 struct MonitoredCall: Decodable {
     let expectedArrivalTime: String? // Datetime
-    var arrivalInterval: String {
-        return stringIntervalFromDateTime(dt: dateFromDatetimeString(dt: expectedArrivalTime))
+    var timeUntilArrivalInSeconds: Int? {
+        return intervalFromDateTime(dt: dateFromDatetimeString(dt: expectedArrivalTime))
     }
     let expectedDepartureTime: String? //Datetime
     let extensions: MonitoredCallExtension?
@@ -228,7 +238,9 @@ struct Bus {
     }
     var destinationId: String? // Destination
     var destinationName: String? // Destination
-    var arrivalInterval: String
+    var arrivalCountdown: String {
+        return countdownFromTimeInSeconds(timeUntilArrival: secondsAway)
+    }
 }
 
 

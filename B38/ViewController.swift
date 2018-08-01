@@ -15,12 +15,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Do any additional setup after loading the view, typically from a nib.
         refresh()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear( animated )
-        
-        //nextBussesTable.reloadData()
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -47,7 +41,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         var milesAway = ""
-        if let miles = cellBus.milesAway {
+        if let miles = cellBus.milesAway,cellBus.descriptiveDistance.range(of: "miles") == nil {
             milesAway = "\(((miles * 10).rounded(.up)/10)) miles away\n"
         }
         
@@ -57,7 +51,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         
-        cell.textLabel?.text = "\(destinationName)\(cellBus.descriptiveDistance)\n\(milesAway)\(stopsAway)\(cellBus.arrivalInterval)"
+        cell.textLabel?.text = "\(destinationName)\(cellBus.descriptiveDistance)\n\(milesAway)\(stopsAway)\(cellBus.arrivalCountdown)"
         return cell
     }
 
@@ -65,6 +59,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var intersection: UILabel!
     @IBOutlet weak var nextBussesTable: UITableView!
     @IBOutlet weak var refreshButton: UIButton!
+    @IBOutlet weak var loadingMessage: UILabel!
     
     @IBAction func refreshButtonAction(_ sender: UIButton) {
         refresh()
@@ -72,14 +67,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var incomingBusses = [Bus]()
     
-    func loading() {
-        self.incomingBusses.append(Bus(id: UUID.init(), descriptiveDistance: "Loading . . .", metersAway: nil, stopsAway: nil, secondsAway: nil, destinationId: nil, destinationName: nil, arrivalInterval: ""))
+    var isTimerRunning = false
+    func runBusCountdownTimer() {
+        if (!isTimerRunning){
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+                self.updateTimer()
+            })
+            //Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(ViewController.updateTimer)), userInfo: nil, repeats: true)
+            isTimerRunning = true
+        }
     }
     
+    func updateTimer() {
+        
+        var newIncomingBusses = [Bus]()
+        
+        for var bus in incomingBusses {
+            if (bus.secondsAway != nil) {
+                bus.secondsAway! -= 1
+            }
+            newIncomingBusses.append(bus)
+        }
+        incomingBusses = newIncomingBusses
+
+        nextBussesTable.reloadData()
+    }
     
     func refresh() {
         refreshButton.isHidden = true
-        loading()
+        loadingMessage.isHidden = false
         let busEndpoint = "https://mta-api.glitch.me/api/bus/B38/303092"
         guard let url = URL(string: busEndpoint) else {
             print("Error: Url Error")
@@ -111,21 +127,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         descriptiveDistance: (distances?.descriptive)!,
                         metersAway: (distances?.metersAway)!,
                         stopsAway: (distances?.stopsAway)!,
-                        secondsAway: 0, // Parse Datetime,
+                        secondsAway: journey.monitoredCall.timeUntilArrivalInSeconds,
                         destinationId: journey.destinationId,
-                        destinationName: journey.destinationName,
-                        arrivalInterval: journey.monitoredCall.arrivalInterval
+                        destinationName: journey.destinationName
                     )
                     self.incomingBusses.append(newBus)
                 }
                 
+                /*
                 for bus in self.incomingBusses {
                     print(bus)
                     print("")
                 }
+                */
                 DispatchQueue.main.async {
+                    self.runBusCountdownTimer()
                     self.nextBussesTable.reloadData()
                     self.refreshButton.isHidden = false
+                    self.loadingMessage.isHidden = true
                 }
                 
                 
@@ -138,5 +157,4 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.intersection.text = "Willoughby Ave. and Classon Ave."
     }
 }
-
 
